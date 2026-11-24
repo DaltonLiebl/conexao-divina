@@ -109,8 +109,8 @@ where id = (select id from auth.users where email = 'SEU_EMAIL');
 ## Etapas
 
 > 24/11/2026: a pedido do dono, as telas do app vieram antes da autenticação. O app já funciona sem login:
-> conteúdo inicial em  e dados do usuário (nome, favoritos, destaques, última leitura,
-> progresso de jornadas) no localStorage do aparelho (). Na etapa de login esses dados
+> conteúdo inicial em `src/content/` e dados do usuário (nome, favoritos, destaques, última leitura,
+> progresso de jornadas) no localStorage do aparelho (`src/lib/local-store.ts`). Na etapa de login esses dados
 > passam a ser sincronizados com as tabelas já criadas na migração 0001.
 
 | #  | Etapa                                                                        | Estado        |
@@ -127,11 +127,11 @@ where id = (select id from auth.users where email = 'SEU_EMAIL');
 
 ### Conteúdo e Bíblia
 
-- **Bíblia Livre (BLIVRE)**, CC BY 4.0 Brasil, baixada de eBible.org. Ver .
-  O texto não é alterado.  converte o VPL em um JSON por livro.
-- O conteúdo () só guarda **referências**. O texto do versículo é sempre lido da Bíblia.
-   confere se todas as referências existem.
-- O rodízio diário () usa a data de Brasília: todos veem o mesmo conteúdo no mesmo dia.
+- **Bíblia Livre (BLIVRE)**, CC BY 4.0 Brasil, baixada de eBible.org. Ver `data/biblia/blivre/LEIA-ME.md`.
+  O texto não é alterado. `scripts/build-bible.mjs` converte o VPL em um JSON por livro.
+- O conteúdo (`src/content/`) só guarda **referências**. O texto do versículo é sempre lido da Bíblia.
+  `npm run check:content` confere se todas as referências existem.
+- O rodízio diário (`src/lib/daily.ts`) usa a data de Brasília: todos veem o mesmo conteúdo no mesmo dia.
 - O botão Ouvir usa a voz do próprio aparelho (Web Speech API, sem custo). Áudios gravados entram na etapa 4.
 
 ## Serviços externos que precisam de configuração (não simulados)
