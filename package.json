@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "icons": "node scripts/generate-icons.mjs",
     "check:content": "node scripts/check-content.mts",
-    "deploy": "vercel deploy --prod --yes"
+    "deploy": "npx vercel deploy --prod --yes"
   },
   "dependencies": {
     "@base-ui/react": "^1.9.0",
