@@ -15,6 +15,10 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // O texto da Bíblia é lido do disco em tempo de execução (leitor, busca, conteúdo diário)
+  outputFileTracingIncludes: {
+    "/**": ["./data/biblia/**/*.json"],
+  },
   turbopack: {
     rules: {
       "*.css": {

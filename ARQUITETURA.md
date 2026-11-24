@@ -68,11 +68,8 @@ scripts/generate-icons.mjs  gera os ícones PWA a partir do símbolo
    Datas futuras só ficam visíveis para a equipe. O fuso é `America/Sao_Paulo` (`app_today()`).
 7. **Compras antes do cadastro.** Webhooks gravam a assinatura com `customer_email`. `ensure_profile()`
    vincula ao usuário **somente se o e-mail estiver confirmado**.
-8. **Bíblia.** O texto é importado de uma tradução **licenciada para uso comercial** (tabela
-   `bible_translations` com licença e atribuição exibidas no leitor). Nada de texto inventado. Opções a
-   confirmar na etapa da Bíblia: *Bíblia Livre* (licença aberta Creative Commons, exige atribuição) e
-   *Tradução Brasileira (1917)* (considerada domínio público). Almeida ARA/NVI/NTLH/ACF são protegidas
-   e exigem licença das editoras.
+8. **Bíblia.** Bíblia Livre (BLIVRE), licença CC BY 4.0 Brasil, com crédito exibido no app. Almeida ARA/NVI/NTLH/ACF
+   são protegidas e exigem licença das editoras.
 9. **Imagens.** As capas padrão são paisagens SVG próprias (`components/brand/scene.tsx`), sem licença de
    terceiros. Fotos enviadas pelo painel (Storage) as substituem. A tabela `media_assets` guarda crédito
    e licença de cada arquivo.
@@ -111,19 +108,31 @@ where id = (select id from auth.users where email = 'SEU_EMAIL');
 
 ## Etapas
 
+> 24/11/2026: a pedido do dono, as telas do app vieram antes da autenticação. O app já funciona sem login:
+> conteúdo inicial em  e dados do usuário (nome, favoritos, destaques, última leitura,
+> progresso de jornadas) no localStorage do aparelho (). Na etapa de login esses dados
+> passam a ser sincronizados com as tabelas já criadas na migração 0001.
+
 | #  | Etapa                                                                        | Estado        |
 | -- | ---------------------------------------------------------------------------- | ------------- |
 | 1  | Arquitetura, banco de dados (RLS + testes), design system, PWA manifest, ícones | **Concluída** |
-| 2  | Autenticação (e-mail/senha, Google, recuperação, verificação), proteção de rotas, onboarding, shell do app (barra inferior / lateral) | Próxima |
-| 3  | Página inicial, Palavra do dia, Versículo do dia (+ gerador de imagens), Como está seu coração | |
-| 4  | Bíblia (importação licenciada, leitor, busca, destaques, notas, histórico)  | |
-| 5  | Orações, Jornadas, Favoritos                                                 | |
-| 6  | Diário, Pedidos de oração, Progresso e conquistas                            | |
-| 7  | Momento de Paz (áudio), Guia da Fé (IA)                                      | |
-| 8  | Notificações push e lembretes (service worker, VAPID, cron)                  | |
-| 9  | Painel administrativo (conteúdo, calendário editorial, usuários, métricas)   | |
-| 10 | Monetização (planos, página premium, webhooks Kiwify/Hotmart/Cakto/Stripe)   | |
-| 11 | Privacidade, termos, SEO final, conteúdo demonstrativo, testes e publicação  | |
+| 1b | App navegável: Início, Palavra do dia, Versículo do dia, dias anteriores, Como está seu coração, Orações (15 categorias), Bíblia completa (leitor, destaques, busca, continuar leitura), Jornadas (2 × 7 dias), Favoritos, Perfil (nome, letra, tema, instalar) | **Concluída** |
+| 2  | Autenticação (e-mail/senha, Google, recuperação, verificação), onboarding completo, sincronizar dados locais com o banco | Próxima |
+| 3  | Gerador de imagens de versículos, Diário, Pedidos de oração, Progresso e conquistas | |
+| 4  | Momento de Paz (áudio), Guia da Fé (IA)                                      | |
+| 5  | Notificações push e lembretes (service worker, VAPID, cron)                  | |
+| 6  | Painel administrativo (conteúdo, calendário editorial, usuários, métricas)   | |
+| 7  | Monetização (planos, página premium, webhooks Kiwify/Hotmart/Cakto/Stripe)   | |
+| 8  | Privacidade, termos, SEO final, testes e publicação                          | |
+
+### Conteúdo e Bíblia
+
+- **Bíblia Livre (BLIVRE)**, CC BY 4.0 Brasil, baixada de eBible.org. Ver .
+  O texto não é alterado.  converte o VPL em um JSON por livro.
+- O conteúdo () só guarda **referências**. O texto do versículo é sempre lido da Bíblia.
+   confere se todas as referências existem.
+- O rodízio diário () usa a data de Brasília: todos veem o mesmo conteúdo no mesmo dia.
+- O botão Ouvir usa a voz do próprio aparelho (Web Speech API, sem custo). Áudios gravados entram na etapa 4.
 
 ## Serviços externos que precisam de configuração (não simulados)
 
