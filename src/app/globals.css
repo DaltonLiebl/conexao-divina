@@ -87,66 +87,66 @@
   --ease-gentle: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Tema claro (opcional, escolhido no Perfil) */
+/* Tema claro (opcional: botão sol/lua no cabeçalho ou Perfil) */
 :root {
   --font-scale: 1;
   --radius: 0.875rem;
 
-  --background: #f7f4ee;
-  --background-2: #efe9de;
-  --foreground: #16202f;
+  --background: #faf8f4;
+  --background-2: #f3eee5;
+  --foreground: #172236;
   --card: #ffffff;
-  --card-2: #fbf8f2;
-  --card-foreground: #16202f;
+  --card-2: #fffcf6;
+  --card-foreground: #172236;
   --popover: #ffffff;
-  --popover-foreground: #16202f;
-  --primary: #0b1220;
-  --primary-foreground: #f5f1e8;
-  --secondary: #efe9de;
-  --secondary-foreground: #0b1220;
-  --muted: #f0ebe1;
-  --muted-foreground: #556070;
-  --accent: #f1e9d9;
-  --accent-foreground: #0b1220;
+  --popover-foreground: #172236;
+  --primary: #172236;
+  --primary-foreground: #fdf8ee;
+  --secondary: #f4efe6;
+  --secondary-foreground: #172236;
+  --muted: #f5f1e9;
+  --muted-foreground: #586377;
+  --accent: #fbf3e3;
+  --accent-foreground: #172236;
   --destructive: #b42318;
-  --border: #e3dacb;
-  --input: #d9cfbd;
-  --ring: #b8955a;
+  --border: #ebe3d4;
+  --input: #e2d8c6;
+  --ring: #d9a441;
 
-  --gold: #c9a66b;
-  --gold-light: #e8d5ac;
-  --gold-ink: #7a5c27;
-  --gold-foreground: #0b1220;
+  --gold: #d9a441;
+  --gold-light: #f3d79c;
+  --gold-ink: #8a6420;
+  --gold-foreground: #172236;
   --sage: #819b89;
   --sage-ink: #46604f;
   --navy: #0b1220;
-  --sand: #f7f4ee;
+  --sand: #faf8f4;
   --success: #3f6b4f;
 
-  --hl-gold: #f6e7c4;
+  --hl-gold: #f8e7bf;
   --hl-green: #dcebdf;
   --hl-blue: #dbe6f3;
   --hl-rose: #f6dede;
   --hl-lilac: #e7e0f2;
 
-  --chart-1: #0b1220;
-  --chart-2: #c9a66b;
+  --chart-1: #172236;
+  --chart-2: #d9a441;
   --chart-3: #819b89;
   --chart-4: #7a8aa3;
-  --chart-5: #d9c7a3;
+  --chart-5: #e8cf98;
 
-  --sidebar: #fbf9f4;
-  --sidebar-foreground: #16202f;
-  --sidebar-primary: #0b1220;
-  --sidebar-primary-foreground: #f5f1e8;
-  --sidebar-accent: #f1ebdf;
-  --sidebar-accent-foreground: #0b1220;
-  --sidebar-border: #e6ddcd;
-  --sidebar-ring: #c9a66b;
+  --sidebar: #fffdf9;
+  --sidebar-foreground: #172236;
+  --sidebar-primary: #172236;
+  --sidebar-primary-foreground: #fdf8ee;
+  --sidebar-accent: #faf3e6;
+  --sidebar-accent-foreground: #172236;
+  --sidebar-border: #efe8da;
+  --sidebar-ring: #d9a441;
 
-  --shadow-soft-v: 0 1px 2px rgb(11 18 32 / 0.04), 0 10px 30px -12px rgb(11 18 32 / 0.14);
-  --shadow-lift-v: 0 2px 6px rgb(11 18 32 / 0.06), 0 24px 48px -16px rgb(11 18 32 / 0.24);
-  --page-glow: radial-gradient(60rem 30rem at 70% -10%, rgb(201 166 107 / 0.1), transparent 70%);
+  --shadow-soft-v: 0 1px 2px rgb(23 34 54 / 0.04), 0 10px 30px -14px rgb(120 90 40 / 0.18);
+  --shadow-lift-v: 0 2px 6px rgb(23 34 54 / 0.05), 0 24px 48px -18px rgb(120 90 40 / 0.28);
+  --page-glow: radial-gradient(60rem 30rem at 75% -10%, rgb(243 215 156 / 0.25), transparent 70%);
 }
 
 /* Tema escuro (padrão do app) */
@@ -276,6 +276,29 @@
     background:
       radial-gradient(32rem 18rem at 100% 0%, rgb(212 180 124 / 0.16), transparent 70%),
       linear-gradient(160deg, #1a2940 0%, #101b2d 60%, #0b1220 100%);
+  }
+  /* No tema claro, o card de versículo fica creme com texto azul-marinho */
+  html:not(.dark) .verse-card {
+    color: #1d2a3f;
+    --tw-ring-color: rgb(217 164 65 / 0.3);
+    background:
+      radial-gradient(32rem 18rem at 100% 0%, rgb(243 215 156 / 0.45), transparent 70%),
+      linear-gradient(160deg, #fffaf0 0%, #fbf1dd 60%, #f6e5c3 100%);
+  }
+  html:not(.dark) .verse-card [class*="text-[#d4b47c]"] {
+    color: #9a7330;
+  }
+  html:not(.dark) .verse-card [class*="text-[#e8d5ac]"] {
+    color: #8a6420;
+  }
+  html:not(.dark) .verse-card [class*="text-[#f5f1e8]"] {
+    color: rgb(29 42 63 / 0.75);
+  }
+  html:not(.dark) .verse-card [class*="border-white"] {
+    border-color: rgb(29 42 63 / 0.1);
+  }
+  html:not(.dark) .verse-card > [class*="opacity-35"] {
+    display: none;
   }
   /* Texto de leitura (reflexões, orações, Bíblia) */
   .prose-reading {

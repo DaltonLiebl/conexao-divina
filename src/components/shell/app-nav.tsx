@@ -153,7 +153,7 @@ export function Sidebar() {
                         "group flex min-h-11 items-center justify-center gap-3.5 rounded-xl px-3.5 text-[0.95rem] font-medium transition-all lg:justify-start",
                         active
                           ? "bg-linear-to-r from-[#e8d5ac] to-[#c9a66b] font-semibold text-[#0b1220] shadow-[0_8px_24px_-10px_rgb(212_180_124/0.6)]"
-                          : "text-foreground/80 hover:bg-sidebar-accent hover:text-foreground",
+                          : "text-foreground/85 hover:bg-sidebar-accent hover:text-foreground",
                       )}
                     >
                       <Icon
@@ -175,15 +175,15 @@ export function Sidebar() {
       <div className="relative hidden shrink-0 overflow-hidden [@media(min-width:1024px)_and_(min-height:940px)]:block">
         {/* eslint-disable-next-line @next/next/no-img-element -- foto local otimizada */}
         <img src="/images/orando.webp" alt="" aria-hidden className="h-32 w-full object-cover object-[70%_center]" loading="lazy" />
-        <div className="absolute inset-0 bg-linear-to-b from-sidebar via-sidebar/20 to-sidebar" />
-        <figure className="relative -mt-10 mx-3.5 mb-4 rounded-2xl bg-[#101b2d]/90 p-4 ring-1 ring-white/8 backdrop-blur">
+        <div className="absolute inset-0 bg-linear-to-b from-sidebar via-sidebar/10 to-sidebar" />
+        <figure className="relative -mt-10 mx-3.5 mb-4 rounded-2xl bg-white/95 p-4 shadow-soft ring-1 ring-border backdrop-blur dark:bg-[#101b2d]/90 dark:ring-white/8">
           <span aria-hidden className="font-heading text-2xl leading-none text-gold">
             “
           </span>
-          <blockquote className="-mt-1 font-heading text-[0.95rem] leading-snug text-[#f5f1e8]/90 italic">
+          <blockquote className="-mt-1 font-heading text-[0.95rem] leading-snug text-foreground/85 italic">
             Lâmpada para os meus pés é a tua palavra, e luz para o meu caminho.
           </blockquote>
-          <figcaption className="mt-2 text-xs font-semibold text-gold">Salmos 119:105</figcaption>
+          <figcaption className="mt-2 text-xs font-semibold text-gold-ink">Salmos 119:105</figcaption>
         </figure>
       </div>
     </aside>
@@ -216,7 +216,7 @@ function ThemeToggle() {
       type="button"
       onClick={() => setTheme(dark ? "light" : "dark")}
       aria-label={dark ? "Mudar para o tema claro" : "Mudar para o tema escuro"}
-      className="relative flex h-10 w-[4.5rem] items-center rounded-full bg-card ring-1 ring-border transition-colors hover:ring-gold/40"
+      className="relative flex h-10 w-[4.5rem] shrink-0 items-center rounded-full bg-card shadow-soft ring-1 ring-border transition-colors hover:ring-gold/40"
     >
       <span
         className={cn(
@@ -287,13 +287,11 @@ export function AppHeader() {
           >
             <Search className="size-5" />
           </Link>
-          <span className="hidden sm:block">
-            <ThemeToggle />
-          </span>
+          <ThemeToggle />
           <Link
             href="/perfil"
             aria-label="Perfil e ajustes"
-            className="grid size-10 place-items-center rounded-full bg-linear-to-br from-[#8a6a3a] to-[#5c4524] font-heading text-lg font-semibold text-[#f5e9d0] ring-2 ring-gold/30 transition-transform hover:scale-105"
+            className="grid size-10 place-items-center rounded-full bg-linear-to-br from-[#24395a] to-[#0b1220] font-heading dark:from-[#8a6a3a] dark:to-[#5c4524] text-lg font-semibold text-[#f5e9d0] ring-2 ring-gold/30 transition-transform hover:scale-105"
           >
             {initial ?? <User className="size-5" />}
           </Link>

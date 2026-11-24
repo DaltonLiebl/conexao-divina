@@ -81,7 +81,7 @@ export default async function HomePage() {
     <div className="page space-y-6 md:space-y-7">
       {/* 1. Destaque + Progresso */}
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
-        <section className="relative isolate -mx-5 overflow-hidden md:mx-0 md:rounded-3xl md:shadow-lift md:ring-1 md:ring-white/8 xl:col-span-8">
+        <section className="relative isolate -mx-5 overflow-hidden md:mx-0 md:rounded-3xl md:shadow-lift md:ring-1 md:ring-[#ebe3d4] dark:md:ring-white/8 xl:col-span-8">
           <div className="absolute inset-0 -z-10">
             {/* eslint-disable-next-line @next/next/no-img-element -- foto local otimizada */}
             <img
@@ -89,19 +89,26 @@ export default async function HomePage() {
               alt=""
               aria-hidden
               fetchPriority="high"
-              className="size-full object-cover object-[65%_center]"
+              className="hidden size-full object-cover object-[65%_center] dark:block"
             />
-            <div className="absolute inset-0 bg-linear-to-r from-[#0b1220]/90 via-[#0b1220]/45 to-transparent" />
-            <div className="absolute inset-0 bg-linear-to-t from-[#0b1220]/70 via-transparent to-transparent md:hidden" />
+            {/* eslint-disable-next-line @next/next/no-img-element -- versão clara (tema claro) */}
+            <img
+              src="/images/hero-cruz-clara.webp"
+              alt=""
+              aria-hidden
+              className="size-full object-cover object-[60%_40%] dark:hidden"
+            />
+            <div className="absolute inset-0 bg-linear-to-r from-[#fdf8ee]/95 via-[#fdf8ee]/65 to-transparent dark:from-[#0b1220]/90 dark:via-[#0b1220]/45" />
+            <div className="absolute inset-0 bg-linear-to-t from-[#fdf8ee]/80 via-[#fdf8ee]/20 to-transparent md:hidden dark:from-[#0b1220]/70 dark:via-transparent" />
           </div>
-          <div className="flex min-h-[22rem] flex-col justify-center px-6 py-10 text-[#f5f1e8] md:min-h-[20rem] md:px-12 xl:min-h-[21rem]">
-            <p className="flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[#e8d5ac]">
-              <span aria-hidden className="h-px w-8 bg-[#e8d5ac]" /> Renove sua fé
+          <div className="flex min-h-[22rem] flex-col justify-center px-6 py-10 text-[#172236] dark:text-[#f5f1e8] md:min-h-[20rem] md:px-12 xl:min-h-[21rem]">
+            <p className="flex items-center gap-3 text-[0.72rem] font-semibold uppercase tracking-[0.28em] text-[#8a6420] dark:text-[#e8d5ac]">
+              <span aria-hidden className="h-px w-8 bg-[#8a6420] dark:bg-[#e8d5ac]" /> Renove sua fé
             </p>
             <h1 className="mt-3 max-w-xl font-heading text-[2.4rem] leading-[1.05] font-semibold md:text-[3.2rem] xl:text-[3.5rem]">
               Caminhe com Deus todos os dias.
             </h1>
-            <p className="mt-4 max-w-md text-[1.02rem] leading-relaxed text-[#f5f1e8]/85">
+            <p className="mt-4 max-w-md text-[1.02rem] leading-relaxed text-[#172236]/80 dark:text-[#f5f1e8]/85">
               Palavra, oração e direção para uma vida mais leve e com propósito.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -113,7 +120,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/coracao"
-                className="inline-flex h-12 items-center gap-2.5 rounded-full px-6 font-semibold text-[#f5f1e8] ring-1 ring-[#e8d5ac]/50 backdrop-blur-sm transition-colors hover:bg-white/10"
+                className="inline-flex h-12 items-center gap-2.5 rounded-full px-6 bg-white/90 font-semibold text-[#172236] shadow-soft ring-1 ring-[#e8d5ac] backdrop-blur-sm transition-colors hover:bg-white dark:bg-transparent dark:text-[#f5f1e8] dark:shadow-none dark:ring-[#e8d5ac]/50 dark:hover:bg-white/10"
               >
                 <Heart className="size-4.5" aria-hidden /> Como está seu coração?
               </Link>
@@ -131,7 +138,9 @@ export default async function HomePage() {
         <article className="surface relative grid grid-cols-1 overflow-hidden sm:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
           <div className="relative h-52 sm:h-auto">
             {/* eslint-disable-next-line @next/next/no-img-element -- foto local otimizada */}
-            <img src="/images/biblia-aberta.webp" alt="" aria-hidden loading="lazy" className="size-full object-cover" />
+            <img src="/images/biblia-aberta.webp" alt="" aria-hidden loading="lazy" className="hidden size-full object-cover dark:block" />
+            {/* eslint-disable-next-line @next/next/no-img-element -- versão clara (tema claro) */}
+            <img src="/images/biblia-clara.webp" alt="" aria-hidden loading="lazy" className="size-full object-cover dark:hidden" />
             <div className="absolute inset-0 bg-linear-to-t from-card to-transparent sm:bg-linear-to-r sm:from-transparent sm:via-transparent sm:to-card" />
           </div>
           <div className="flex flex-col p-6 pt-4 sm:pl-2 sm:pt-6">
@@ -160,7 +169,7 @@ export default async function HomePage() {
           </div>
         </article>
 
-        <article className="relative isolate flex flex-col overflow-hidden rounded-3xl p-6 text-[#1d2a3f] shadow-soft ring-1 ring-[#e8d5ac]/40 md:p-8">
+        <article className="relative isolate flex flex-col overflow-hidden rounded-3xl p-6 text-[#1d2a3f] shadow-soft ring-1 ring-[#e8d5ac]/60 md:p-8">
           <div className="absolute inset-0 -z-10">
             {/* eslint-disable-next-line @next/next/no-img-element -- foto local otimizada */}
             <img src="/images/nuvens-douradas.webp" alt="" aria-hidden loading="lazy" className="size-full object-cover" />

@@ -18,5 +18,7 @@ nem usadas para montar um serviço concorrente de fotos.
 | noite.webp | photo-1528827352060-35c8861f19f4 |
 | campo.webp | photo-1593455071238-92dd081a39b1 |
 | mar.webp | photo-1777312406578-0c08985a6b16 |
+| hero-cruz-clara.webp | photo-1592818868295-f527dbac420d |
+| biblia-clara.webp | photo-1524639064490-254e0a1db723 |
 
 Convertidas para WebP (1600px, 2000px na capa) com sharp.
