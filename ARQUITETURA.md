@@ -39,7 +39,13 @@ scripts/generate-icons.mjs  gera os ícones PWA a partir do símbolo
 
 ## Decisões
 
-1. **Projeto Supabase compartilhado.** Por escolha do dono, o app usa o schema `conexao` dentro do projeto
+1. **Projeto Supabase próprio (24/11/2026).** O app usa o projeto `conexao-divina` (ref `mbfpknrmgaxrdggrsrpi`,
+   São Paulo), numa conta Supabase separada da dos apps pessoais, schema `conexao` exposto na Data API.
+   Migrações 0001 e 0002 aplicadas. Site URL = produção; redirects: produção/** e http://localhost:3210/**.
+   Cadastro e confirmação de e-mail ligados. **Falta SMTP próprio** (ex.: Resend): o e-mail padrão do Supabase
+   só envia para membros da equipe do projeto, então clientes não recebem a confirmação até configurar.
+   O texto abaixo (projeto compartilhado) ficou só como histórico.
+1b. **(histórico) Projeto Supabase compartilhado.** Por escolha do dono, o app usa o schema `conexao` dentro do projeto
    `crm-entregas` (ref `lzrspcqyqeveivwoioxm`), onde também estão o CRM, o Financeiro e o StudyHub.
    Consequências:
    - `auth.users` é compartilhado. Um usuário só "existe" no app quando tem linha em `conexao.profiles`,
@@ -129,7 +135,7 @@ where id = (select id from auth.users where email = 'SEU_EMAIL');
 | -- | ---------------------------------------------------------------------------- | ------------- |
 | 1  | Arquitetura, banco de dados (RLS + testes), design system, PWA manifest, ícones | **Concluída** |
 | 1b | App navegável: Início, Palavra do dia, Versículo do dia, dias anteriores, Como está seu coração, Orações (15 categorias), Bíblia completa (leitor, destaques, busca, continuar leitura), Jornadas (2 × 7 dias), Favoritos, Perfil (nome, letra, tema, instalar) | **Concluída** |
-| 2  | Autenticação (e-mail/senha, Google, recuperação, verificação), onboarding completo, sincronizar dados locais com o banco | Próxima |
+| 2  | Autenticação: telas de entrar, criar conta, recuperar e redefinir senha, sair, excluir conta (feito 24/11). Falta: SMTP, Google, sincronizar dados locais com o banco | Em andamento |
 | 3  | Gerador de imagens de versículos, Diário, Pedidos de oração, Progresso e conquistas | |
 | 4  | Momento de Paz (áudio), Guia da Fé (IA)                                      | |
 | 5  | Notificações push e lembretes (service worker, VAPID, cron)                  | |

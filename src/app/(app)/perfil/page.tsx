@@ -6,6 +6,7 @@ import { InstallApp } from "@/components/profile/install-app";
 import { BIBLE_TRANSLATION } from "@/lib/bible/books";
 import { Logo } from "@/components/brand/logo";
 import { ListLink, PageHeader } from "@/components/ds/layout";
+import { AccountCard } from "@/components/auth/account-card";
 
 export const metadata: Metadata = { title: "Perfil" };
 
@@ -16,6 +17,9 @@ export default function PerfilPage() {
 
       <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-2 xl:gap-6">
         <div className="space-y-5 xl:space-y-6">
+          <Card title="Sua conta">
+            <AccountCard />
+          </Card>
           <Card title="Seu nome">
             <NameEditor />
           </Card>
@@ -39,8 +43,8 @@ export default function PerfilPage() {
           </Card>
           <Card title="Seus dados">
             <p className="text-muted-foreground">
-              Por enquanto, seu nome, favoritos, destaques e o progresso das jornadas ficam salvos somente neste
-              aparelho. Quando o login for ativado, você poderá guardá-los na sua conta e acessar de qualquer lugar.
+              Seu nome, favoritos, destaques e progresso ficam salvos neste aparelho. Em breve, quem tiver conta
+              poderá sincronizá-los e acessar de qualquer lugar.
             </p>
             <ResetDeviceData />
           </Card>

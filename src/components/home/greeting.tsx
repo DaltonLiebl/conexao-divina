@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocalProfile } from "@/lib/local-store";
 import { formatLongDate } from "@/lib/daily";
+import { useUser } from "@/components/auth/use-session";
 
 const noop = () => () => {};
 /** Hora local do aparelho (no servidor, assume manhã). */
@@ -87,7 +88,9 @@ export function NamePrompt() {
     () => true,
     () => false,
   );
-  if (!mounted || profile.askedName) return null;
+  const user = useUser();
+  // quem entrou com uma conta já informou o nome no cadastro
+  if (!mounted || profile.askedName || user === undefined || user?.user_metadata?.display_name) return null;
 
   const save = (name: string) => setProfile({ name: name.trim().slice(0, 40), askedName: true });
 

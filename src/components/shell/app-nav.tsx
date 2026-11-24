@@ -25,6 +25,8 @@ import { Logo, LogoMark } from "@/components/brand/logo";
 import { brand } from "@/lib/brand";
 import { useLocalProfile } from "@/lib/local-store";
 import { useIsClient } from "@/components/appearance/appearance-provider";
+import { useUser } from "@/components/auth/use-session";
+import { authEnabled } from "@/lib/supabase/config";
 
 type NavItem = { href: string; label: string; icon: LucideIcon; match?: string[] };
 
@@ -239,7 +241,10 @@ export function AppHeader() {
   const hour = useHour();
   const { hello, blessing } = greetingFor(hour);
   const name = ready ? profile.name.trim() : "";
-  const initial = name ? name[0]!.toUpperCase() : null;
+  const user = useUser();
+  const accountName = (user?.user_metadata?.display_name as string | undefined)?.trim() ?? "";
+  const shownName = name || accountName;
+  const initial = shownName ? shownName[0]!.toUpperCase() : null;
 
   return (
     <header
@@ -257,7 +262,7 @@ export function AppHeader() {
         <div className={cn("hidden min-w-0 md:block", !isHome && "lg:block md:hidden")}>
           <p className="truncate font-heading text-[1.35rem] leading-tight font-semibold">
             {hello}
-            {name ? `, ${name}` : ""}!
+            {shownName ? `, ${shownName}` : ""}!
           </p>
           <p className="truncate text-[0.82rem] text-muted-foreground">{blessing}</p>
         </div>
@@ -287,7 +292,17 @@ export function AppHeader() {
           >
             <Search className="size-5" />
           </Link>
-          <ThemeToggle />
+          <span className={cn(authEnabled && user === null ? "hidden sm:block" : "block")}>
+            <ThemeToggle />
+          </span>
+          {authEnabled && user === null ? (
+            <Link
+              href="/entrar"
+              className="inline-flex h-10 items-center rounded-full bg-linear-to-r from-[#f0dfb8] to-[#c9a66b] px-4 text-sm font-semibold text-[#0b1220] shadow-soft transition-transform hover:-translate-y-0.5"
+            >
+              Entrar
+            </Link>
+          ) : null}
           <Link
             href="/perfil"
             aria-label="Perfil e ajustes"
