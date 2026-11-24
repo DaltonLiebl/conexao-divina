@@ -166,3 +166,9 @@ export const jornadas: Journey[] = [
 ];
 
 export const jornadaPorSlug = (slug: string) => jornadas.find((j) => j.slug === slug);
+
+/** Foto de capa de cada jornada (Unsplash; as demais usam a paisagem da jornada). */
+export const journeyPhotos: Record<string, string> = {
+  "7-dias-de-oracao": "/images/orando-perfil.webp",
+  "7-dias-de-gratidao": "/images/bracos-erguidos.webp",
+};

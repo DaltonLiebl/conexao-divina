@@ -9,6 +9,7 @@ import { AsideCard, ListLink, ReadingLayout } from "@/components/ds/layout";
 import { getPassage } from "@/lib/bible/server";
 import { chapterHref, formatRef } from "@/lib/bible/books";
 import { sentimentoPorSlug, sentimentos } from "@/content/sentimentos";
+import { TrackActivity } from "@/components/progress/progress-ui";
 
 export function generateStaticParams() {
   return sentimentos.map((s) => ({ slug: s.slug }));
@@ -28,6 +29,7 @@ export default async function SentimentoPage({ params }: PageProps<"/coracao/[sl
   return (
     <div className="page">
       <TopBar title={s.label} backHref="/coracao" />
+      <TrackActivity kind="dia" />
 
       <header className="mb-8 lg:mb-10">
         <span aria-hidden className="text-5xl md:text-6xl">

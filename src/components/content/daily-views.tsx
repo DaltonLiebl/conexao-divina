@@ -7,6 +7,7 @@ import { AsideCard, ListLink, ReadingLayout } from "@/components/ds/layout";
 import { getPassage } from "@/lib/bible/server";
 import { chapterHref, formatRef } from "@/lib/bible/books";
 import { formatLongDate, palavraDoDia, versiculoDoDia } from "@/lib/daily";
+import { TrackActivity } from "@/components/progress/progress-ui";
 
 /** Nota exigida: conteúdo inicial demonstrativo identificado. */
 export function DemoNote() {
@@ -83,6 +84,7 @@ export async function PalavraView({ iso, isToday }: { iso: string; isToday: bool
 
   return (
     <article>
+      <TrackActivity kind="devocional" id={`palavra-${iso}`} />
       {/* Capa */}
       <header className="relative isolate -mx-5 overflow-hidden md:mx-0 md:rounded-4xl md:ring-1 md:ring-white/5">
         <div className="absolute inset-0 -z-10">
@@ -161,6 +163,7 @@ export async function VersiculoView({ iso, isToday }: { iso: string; isToday: bo
 
   return (
     <article>
+      <TrackActivity kind="devocional" id={`versiculo-${iso}`} />
       <header className="mb-8 pt-2 md:pt-0">
         <p className="eyebrow">{isToday ? "Versículo do dia" : "Versículo de " + formatLongDate(iso)}</p>
         <p className="mt-2 text-sm text-muted-foreground first-letter:uppercase">{formatLongDate(iso, true)}</p>

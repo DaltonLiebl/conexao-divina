@@ -79,7 +79,13 @@ scripts/generate-icons.mjs  gera os ícones PWA a partir do símbolo
     com menu lateral de 240px por categorias e cabeçalho com busca. Conteúdo até 88rem (104rem em telas muito
     largas); telas de leitura com coluna de texto de até 46rem e coluna lateral de ações. Classes base em
     `globals.css`: `.page`, `.surface`, `.verse-card`, `.page-title`. "Dias anteriores" virou `/devocionais`.
-11. **Acessibilidade.** Base de 17px, controle de tamanho de letra (0,9× a 1,5×) que escala o app inteiro
+11. **Visual v3 (24/11/2026), a partir do modelo enviado pelo dono.** Fotos do Unsplash (licença gratuita, uso
+    comercial) em `public/images` (ver CREDITOS.md), convertidas para WebP. `Scene` agora mostra fotos.
+    Logo: Bíblia aberta com cruz e raios. Menu lateral com item ativo dourado e versículo com foto. Início:
+    destaque com a cruz, "Meu progresso espiritual" (dias seguidos, orações, devocionais, jornadas, meta semanal
+    de 5 dias), Palavra e Versículo do dia lado a lado, atalhos, sentimentos com ícones, jornadas com foto.
+    Progresso fica no aparelho (`cd:atividade`), registrado por `<TrackActivity>` nas telas de conteúdo.
+12. **Acessibilidade.** Base de 17px, controle de tamanho de letra (0,9× a 1,5×) que escala o app inteiro
     (tudo em rem), botões de pelo menos 48px, foco visível, contraste AA (variantes `-ink` para texto
     dourado/verde), opção "reduzir animações" e respeito a `prefers-reduced-motion`.
 

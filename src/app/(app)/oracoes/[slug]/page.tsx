@@ -11,6 +11,7 @@ import { AsideCard, ListLink, ReadingLayout } from "@/components/ds/layout";
 import { getPassage } from "@/lib/bible/server";
 import { chapterHref } from "@/lib/bible/books";
 import { categoriaPorSlug, oracaoPorSlug, oracoes } from "@/content/oracoes";
+import { TrackActivity } from "@/components/progress/progress-ui";
 
 export function generateStaticParams() {
   return oracoes.map((o) => ({ slug: o.slug }));
@@ -30,6 +31,7 @@ export default async function OracaoPage({ params }: PageProps<"/oracoes/[slug]"
   return (
     <div className="page">
       <TopBar title={cat.name} backHref={`/oracoes/categoria/${cat.slug}`} />
+      <TrackActivity kind="oracao" id={o.slug} />
 
       <header className="relative isolate overflow-hidden rounded-4xl ring-1 ring-white/5">
         <div className="absolute inset-0 -z-10">

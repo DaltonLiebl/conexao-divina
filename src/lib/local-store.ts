@@ -123,3 +123,32 @@ export const useJourneyProgress = () => useLocalState<Record<string, number[]>>(
 
 export type LastReading = { book: string; chapter: number; label: string; at: string } | null;
 export const useLastReading = () => useLocalState<LastReading>("ultima-leitura", null);
+
+// ---------------------------------------------------------------------------
+// Progresso espiritual: dias com atividade, orações feitas e devocionais lidos
+
+export type Activity = {
+  /** datas (AAAA-MM-DD, horário de Brasília) com alguma atividade */
+  days: string[];
+  /** "slug-da-oracao:data" */
+  prayers: string[];
+  /** "palavra:data" ou "versiculo:data" */
+  devotionals: string[];
+};
+const NO_ACTIVITY: Activity = { days: [], prayers: [], devotionals: [] };
+export const useActivity = () => useLocalState<Activity>("atividade", NO_ACTIVITY);
+
+const addUnique = (list: string[], v: string, max = 800) => (list.includes(v) ? list : [...list, v].slice(-max));
+
+export function recordActivity(
+  set: ReturnType<typeof useActivity>[1],
+  today: string,
+  kind: "dia" | "oracao" | "devocional",
+  id?: string,
+) {
+  set((prev) => ({
+    days: addUnique(prev.days, today),
+    prayers: kind === "oracao" && id ? addUnique(prev.prayers, `${id}:${today}`) : prev.prayers,
+    devotionals: kind === "devocional" && id ? addUnique(prev.devotionals, `${id}:${today}`) : prev.devotionals,
+  }));
+}

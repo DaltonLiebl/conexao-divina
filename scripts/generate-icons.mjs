@@ -8,27 +8,25 @@ const out = path.resolve("public/icons");
 fs.mkdirSync(out, { recursive: true });
 
 const NAVY = "#0B1220";
-const GOLD = "#D4B47C";
 const SAND = "#F8F5EF";
 
-// Símbolo (mesmo desenho de src/components/brand/logo.tsx), em 48x48.
-const mark = (fg, cut) => `
-  <g fill="none" stroke-linecap="round">
-    <g stroke="${GOLD}" stroke-width="2.2">
-      <path d="M24 6.5v4.5"/><path d="M11.6 11.6l3.2 3.2"/><path d="M36.4 11.6l-3.2 3.2"/>
-      <path d="M5.5 24h4.5"/><path d="M42.5 24H38"/>
-    </g>
-    <path d="M12.5 33a11.5 11.5 0 0 1 23 0" fill="${GOLD}"/>
-    <path d="M24 24.5v8.5M20.5 27.5h7" stroke="${cut}" stroke-width="2.2"/>
-    <path d="M6 33h36" stroke="${fg}" stroke-width="2.4"/>
-    <path d="M13 38.5h22" stroke="${fg}" stroke-width="2.4" opacity="0.45"/>
-  </g>`;
+// Símbolo (mesmo desenho de src/components/brand/logo.tsx), em 64x48.
+const mark = (_fg, cut) => `
+  <defs><linearGradient id="o" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0dfb8"/><stop offset="1" stop-color="#c9a66b"/></linearGradient></defs>
+  <g fill="none" stroke-linecap="round" stroke="url(#o)">
+    <g stroke-width="2"><path d="M14 15.5l3.2 2.4"/><path d="M50 15.5l-3.2 2.4"/><path d="M20.5 8.5l2 3"/><path d="M43.5 8.5l-2 3"/><path d="M8.5 24h4"/><path d="M55.5 24h-4"/></g>
+    <path d="M32 3v18M26.5 8.5h11" stroke-width="2.6"/>
+  </g>
+  <path d="M20 31a12 9 0 0 1 24 0" fill="url(#o)" opacity="0.35"/>
+  <path d="M32 29.5c-5-3.4-12.5-4.4-21-3.2v15.2c8.5-1.2 16-0.2 21 3.2c5-3.4 12.5-4.4 21-3.2V26.3c-8.5-1.2-16-.2-21 3.2z" fill="url(#o)"/>
+  <path d="M32 29.5v15.2" stroke="${cut}" stroke-width="1.6"/>`;
 
 /** @param size px  @param pad fração de respiro  @param rounded cantos arredondados */
 function svg(size, { pad = 0.2, rounded = true, bg = NAVY } = {}) {
   const inner = size * (1 - pad * 2);
-  const scale = inner / 48;
+  const scale = inner / 64;
   const off = size * pad;
+  const offY = off + (inner - 48 * scale) / 2;
   const r = rounded ? size * 0.22 : 0;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
     <defs>
@@ -37,7 +35,7 @@ function svg(size, { pad = 0.2, rounded = true, bg = NAVY } = {}) {
       </radialGradient>
     </defs>
     <rect width="${size}" height="${size}" rx="${r}" fill="url(#g)"/>
-    <g transform="translate(${off} ${off}) scale(${scale})">${mark(SAND, NAVY)}</g>
+    <g transform="translate(${off} ${offY}) scale(${scale})">${mark(SAND, NAVY)}</g>
   </svg>`;
 }
 

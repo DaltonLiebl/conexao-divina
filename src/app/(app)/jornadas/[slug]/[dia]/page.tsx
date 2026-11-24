@@ -11,6 +11,7 @@ import { AsideCard, ListLink, ReadingLayout } from "@/components/ds/layout";
 import { getPassage } from "@/lib/bible/server";
 import { chapterHref } from "@/lib/bible/books";
 import { jornadaPorSlug, jornadas } from "@/content/jornadas";
+import { TrackActivity } from "@/components/progress/progress-ui";
 
 export function generateStaticParams() {
   return jornadas.flatMap((j) => j.days.map((_, i) => ({ slug: j.slug, dia: String(i + 1) })));
@@ -33,6 +34,7 @@ export default async function JornadaDiaPage({ params }: PageProps<"/jornadas/[s
   return (
     <div className="page">
       <TopBar title={`${j.title} · Dia ${n}`} backHref={`/jornadas/${j.slug}`} />
+      <TrackActivity kind="dia" />
 
       <header className="mb-8 lg:mb-10">
         <p className="eyebrow">

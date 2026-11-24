@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { Check, CheckCircle2, ChevronRight, Circle, RotateCcw } from "lucide-react";
+import { CalendarDays, Check, CheckCircle2, ChevronRight, Circle, Play, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { Scene, type SceneVariant } from "@/components/brand/scene";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useJourneyProgress } from "@/lib/local-store";
+import { journeyPhotos } from "@/content/jornadas";
 import { cn } from "@/lib/utils";
 
 export function JourneyCard(props: {
@@ -16,31 +17,41 @@ export function JourneyCard(props: {
   scene: SceneVariant;
   total: number;
   minutes: number;
+  className?: string;
 }) {
   const [progress] = useJourneyProgress();
   const done = progress[props.slug]?.length ?? 0;
   const pct = Math.round((done / props.total) * 100);
+  const nextDay = Math.min(done + 1, props.total);
   return (
     <Link
-      href={`/jornadas/${props.slug}`}
-      className="group overflow-hidden rounded-4xl bg-card shadow-soft ring-1 ring-border/80 transition-all hover:-translate-y-0.5 hover:shadow-lift"
+      href={done > 0 && done < props.total ? `/jornadas/${props.slug}/${nextDay}` : `/jornadas/${props.slug}`}
+      className={cn(
+        "group relative isolate flex min-h-[15rem] flex-col justify-end overflow-hidden rounded-3xl p-5 text-[#f5f1e8] shadow-soft ring-1 ring-white/8 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift hover:ring-gold/40 md:min-h-[17rem]",
+        props.className,
+      )}
     >
-      <div className="h-44">
-        <Scene variant={props.scene} />
+      <div className="absolute inset-0 -z-10">
+        <Scene variant={props.scene} src={journeyPhotos[props.slug]} className="transition-transform duration-700 group-hover:scale-105" />
+        <div className="absolute inset-0 bg-linear-to-t from-[#0b1220] via-[#0b1220]/55 to-[#0b1220]/0" />
       </div>
-      <div className="p-5">
-        <h2 className="text-[1.55rem] leading-tight font-semibold">{props.title}</h2>
-        <p className="text-muted-foreground">
-          {props.subtitle} · {props.total} dias · {props.minutes} min/dia
-        </p>
-        <div className="mt-4 flex items-center justify-between text-sm">
-          <span className="font-semibold text-muted-foreground">
-            {done === 0 ? "Não iniciada" : done === props.total ? "Concluída" : `Dia ${done} de ${props.total}`}
-          </span>
-          <span className="font-bold">{pct}%</span>
-        </div>
-        <Progress value={pct} className="mt-2" aria-label={`Progresso: ${pct}%`} />
+      <p className="text-xs text-[#f5f1e8]/70">{props.subtitle}</p>
+      <h2 className="mt-1 font-heading text-[1.45rem] leading-tight font-semibold">{props.title}</h2>
+      <div className="mt-4 flex items-center gap-3 text-xs">
+        <span className="inline-flex items-center gap-1 text-[#f5f1e8]/80">
+          <CalendarDays className="size-3.5" aria-hidden /> {props.total} dias
+        </span>
+        <span className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/20">
+          <span className="block h-full rounded-full bg-linear-to-r from-[#e8d5ac] to-[#c9a66b]" style={{ width: `${pct}%` }} />
+        </span>
+        <span className="font-semibold">{pct}%</span>
+        <span className="grid size-9 place-items-center rounded-full bg-linear-to-br from-[#e8d5ac] to-[#c9a66b] text-[#0b1220] shadow transition-transform group-hover:scale-110">
+          <Play className="ml-0.5 size-4 fill-current" aria-hidden />
+        </span>
       </div>
+      <span className="sr-only">
+        {done === 0 ? "Não iniciada" : done === props.total ? "Concluída" : `Dia ${done} de ${props.total}`}
+      </span>
     </Link>
   );
 }

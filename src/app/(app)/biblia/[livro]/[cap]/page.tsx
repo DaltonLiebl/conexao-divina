@@ -8,6 +8,7 @@ import { TrackReading } from "@/components/bible/continue-reading";
 import { ReaderFontButton } from "@/components/bible/reader-font";
 import { getChapter } from "@/lib/bible/server";
 import { BIBLE_TRANSLATION, bookById, bookBySlug } from "@/lib/bible/books";
+import { TrackActivity } from "@/components/progress/progress-ui";
 
 export async function generateMetadata({ params }: PageProps<"/biblia/[livro]/[cap]">): Promise<Metadata> {
   const { livro, cap } = await params;
@@ -38,6 +39,7 @@ export default async function CapituloPage({ params }: PageProps<"/biblia/[livro
     <div className="page pb-36">
       <TopBar title={label} backHref={`/biblia/${b.slug}`} action={<ReaderFontButton />} />
       <TrackReading book={b.slug} chapter={chapter} label={label} />
+      <TrackActivity kind="dia" />
       <div className="mx-auto max-w-3xl">
 
       <header className="mb-8 text-center md:mb-10">

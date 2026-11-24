@@ -5,7 +5,7 @@ import { TopBar } from "@/components/shell/top-bar";
 import { Scene } from "@/components/brand/scene";
 import { JourneyDays } from "@/components/journeys/journey-ui";
 import { formatRef } from "@/lib/bible/books";
-import { jornadaPorSlug, jornadas } from "@/content/jornadas";
+import { journeyPhotos, jornadaPorSlug, jornadas } from "@/content/jornadas";
 
 export function generateStaticParams() {
   return jornadas.map((j) => ({ slug: j.slug }));
@@ -25,7 +25,7 @@ export default async function JornadaPage({ params }: PageProps<"/jornadas/[slug
         <div className="lg:sticky lg:top-24 lg:self-start">
           <header className="relative isolate overflow-hidden rounded-4xl ring-1 ring-white/5">
             <div className="absolute inset-0 -z-10">
-              <Scene variant={j.scene} />
+              <Scene variant={j.scene} src={journeyPhotos[j.slug]} />
               <div className="absolute inset-0 bg-linear-to-t from-[#0b1220] via-[#0b1220]/45 to-transparent" />
             </div>
             <div className="flex min-h-[16rem] flex-col justify-end p-7 text-[#f5f1e8] md:min-h-[20rem] md:p-9">

@@ -2,16 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSyncExternalStore } from "react";
+import { useTheme } from "next-themes";
 import {
-  BookMarked,
+  BarChart3,
+  Bookmark,
   BookOpen,
+  Feather,
+  Flag,
   HandHeart,
   Heart,
-  HeartPulse,
   Home,
-  Map,
+  Moon,
   Search,
-  Settings,
+  Star,
   Sun,
   User,
   type LucideIcon,
@@ -19,35 +23,34 @@ import {
 import { cn } from "@/lib/utils";
 import { Logo, LogoMark } from "@/components/brand/logo";
 import { brand } from "@/lib/brand";
-import { BIBLE_TRANSLATION } from "@/lib/bible/books";
 import { useLocalProfile } from "@/lib/local-store";
 import { useIsClient } from "@/components/appearance/appearance-provider";
 
 type NavItem = { href: string; label: string; icon: LucideIcon; match?: string[] };
 
 /** Menu lateral organizado por categorias. Só entram telas que já existem. */
-const groups: { title: string; items: NavItem[] }[] = [
+const groups: { title?: string; items: NavItem[] }[] = [
   {
-    title: "Principal",
     items: [
       { href: "/inicio", label: "Início", icon: Home },
       { href: "/biblia", label: "Bíblia Sagrada", icon: BookOpen },
       { href: "/oracoes", label: "Orações", icon: HandHeart },
-      { href: "/devocionais", label: "Devocionais", icon: Sun, match: ["/devocionais", "/palavra"] },
-      { href: "/jornadas", label: "Jornadas espirituais", icon: Map },
+      { href: "/devocionais", label: "Devocionais", icon: Feather, match: ["/devocionais", "/palavra"] },
+      { href: "/jornadas", label: "Jornadas espirituais", icon: Flag },
     ],
   },
   {
     title: "Minha espiritualidade",
     items: [
-      { href: "/coracao", label: "Meu coração", icon: HeartPulse },
-      { href: "/versiculo", label: "Versículo do dia", icon: BookMarked },
-      { href: "/favoritos", label: "Meus favoritos", icon: Heart },
+      { href: "/coracao", label: "Meu coração", icon: Heart },
+      { href: "/versiculo", label: "Versículo do dia", icon: Bookmark },
+      { href: "/favoritos", label: "Meus favoritos", icon: Star },
+      { href: "/progresso", label: "Meu progresso", icon: BarChart3 },
     ],
   },
   {
     title: "Conta",
-    items: [{ href: "/perfil", label: "Perfil e ajustes", icon: Settings }],
+    items: [{ href: "/perfil", label: "Perfil e ajustes", icon: User }],
   },
 ];
 
@@ -57,11 +60,11 @@ const tabs: NavItem[] = [
     href: "/inicio",
     label: "Início",
     icon: Home,
-    match: ["/inicio", "/coracao", "/favoritos", "/versiculo", "/devocionais", "/palavra"],
+    match: ["/inicio", "/coracao", "/favoritos", "/versiculo", "/devocionais", "/palavra", "/progresso"],
   },
   { href: "/biblia", label: "Bíblia", icon: BookOpen },
   { href: "/oracoes", label: "Orações", icon: HandHeart },
-  { href: "/jornadas", label: "Jornadas", icon: Map },
+  { href: "/jornadas", label: "Jornadas", icon: Flag },
   { href: "/perfil", label: "Perfil", icon: User },
 ];
 
@@ -90,18 +93,18 @@ export function BottomNav() {
                 href={t.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative flex min-h-16 flex-col items-center justify-center gap-1 text-[0.72rem] font-medium transition-colors",
+                  "flex min-h-16 flex-col items-center justify-center gap-1 text-[0.72rem] font-medium transition-colors",
                   active ? "text-gold-ink" : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 <span
-                  aria-hidden
                   className={cn(
-                    "absolute top-0 h-0.5 w-8 rounded-full bg-gold transition-opacity",
-                    active ? "opacity-100" : "opacity-0",
+                    "grid h-8 w-14 place-items-center rounded-full transition-colors",
+                    active && "bg-linear-to-r from-[#e8d5ac] to-[#c9a66b] text-[#0b1220]",
                   )}
-                />
-                <Icon className="size-[1.4rem]" aria-hidden strokeWidth={active ? 2.2 : 1.8} />
+                >
+                  <Icon className="size-[1.25rem]" aria-hidden strokeWidth={active ? 2.2 : 1.8} />
+                </span>
                 {t.label}
               </Link>
             </li>
@@ -121,20 +124,21 @@ export function Sidebar() {
     <aside className="sticky top-0 hidden h-dvh shrink-0 flex-col border-r border-sidebar-border bg-sidebar md:flex md:w-[5.5rem] lg:w-[15rem]">
       <Link
         href="/inicio"
-        className="flex h-[4.5rem] shrink-0 items-center justify-center border-b border-sidebar-border px-4 lg:justify-start lg:px-5"
+        className="flex shrink-0 justify-center px-4 pb-5 pt-6"
         aria-label={`${brand.name}, ir para o início`}
       >
-        <LogoMark className="size-10 lg:hidden" />
-        <Logo className="hidden lg:inline-flex" showSlogan compact />
+        <LogoMark className="h-10 lg:hidden" />
+        <Logo className="hidden lg:inline-flex" stacked showSlogan />
       </Link>
 
-      <nav aria-label="Menu" className="no-scrollbar flex-1 overflow-y-auto px-3 py-5 lg:px-3.5">
+      <nav aria-label="Menu" className="no-scrollbar min-h-0 flex-1 overflow-y-auto px-3 pb-4 lg:px-3.5">
         {groups.map((g, gi) => (
-          <div key={g.title} className={cn(gi > 0 && "mt-6")}>
-            <p className="mb-2 hidden px-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80 lg:block">
-              {g.title}
-            </p>
-            {gi > 0 ? <div className="mx-auto mb-4 h-px w-8 bg-sidebar-border lg:hidden" aria-hidden /> : null}
+          <div key={gi} className={cn(gi > 0 && "mt-5 border-t border-sidebar-border pt-5")}>
+            {g.title ? (
+              <p className="mb-2 hidden px-3 text-[0.66rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground/80 lg:block">
+                {g.title}
+              </p>
+            ) : null}
             <ul className="flex flex-col gap-1">
               {g.items.map((item) => {
                 const active = isActive(item);
@@ -146,23 +150,16 @@ export function Sidebar() {
                       title={item.label}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "group relative flex min-h-11 items-center justify-center gap-3 rounded-xl px-3 text-[0.92rem] font-medium transition-colors lg:justify-start",
+                        "group flex min-h-11 items-center justify-center gap-3.5 rounded-xl px-3.5 text-[0.95rem] font-medium transition-all lg:justify-start",
                         active
-                          ? "bg-gold/12 text-foreground"
-                          : "text-muted-foreground hover:bg-sidebar-accent hover:text-foreground",
+                          ? "bg-linear-to-r from-[#e8d5ac] to-[#c9a66b] font-semibold text-[#0b1220] shadow-[0_8px_24px_-10px_rgb(212_180_124/0.6)]"
+                          : "text-foreground/80 hover:bg-sidebar-accent hover:text-foreground",
                       )}
                     >
-                      <span
-                        aria-hidden
-                        className={cn(
-                          "absolute inset-y-2 left-0 w-[3px] rounded-full bg-gold transition-opacity",
-                          active ? "opacity-100" : "opacity-0",
-                        )}
-                      />
                       <Icon
-                        className={cn("size-5 shrink-0", active ? "text-gold" : "group-hover:text-gold")}
+                        className={cn("size-5 shrink-0", !active && "text-foreground/70 group-hover:text-gold")}
                         aria-hidden
-                        strokeWidth={active ? 2.1 : 1.8}
+                        strokeWidth={active ? 2.2 : 1.7}
                       />
                       <span className="sr-only lg:not-sr-only lg:truncate">{item.label}</span>
                     </Link>
@@ -174,47 +171,98 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="hidden border-t border-sidebar-border p-4 lg:block">
-        <div className="rounded-2xl bg-linear-to-br from-gold/14 to-transparent p-4 ring-1 ring-gold/20">
-          <p className="font-heading text-[1.02rem] leading-snug italic text-gold-ink">
-            Lâmpada para os meus pés é a tua palavra.
-          </p>
-          <p className="mt-1.5 text-xs text-muted-foreground">Salmos 119:105</p>
-        </div>
-        <p className="mt-3 px-1 text-[0.7rem] leading-relaxed text-muted-foreground/80">
-          Textos bíblicos: {BIBLE_TRANSLATION.name} ({BIBLE_TRANSLATION.short}), CC BY 4.0.
-        </p>
+      {/* Versículo com foto (só no computador e com altura suficiente) */}
+      <div className="relative hidden shrink-0 overflow-hidden [@media(min-width:1024px)_and_(min-height:940px)]:block">
+        {/* eslint-disable-next-line @next/next/no-img-element -- foto local otimizada */}
+        <img src="/images/orando.webp" alt="" aria-hidden className="h-32 w-full object-cover object-[70%_center]" loading="lazy" />
+        <div className="absolute inset-0 bg-linear-to-b from-sidebar via-sidebar/20 to-sidebar" />
+        <figure className="relative -mt-10 mx-3.5 mb-4 rounded-2xl bg-[#101b2d]/90 p-4 ring-1 ring-white/8 backdrop-blur">
+          <span aria-hidden className="font-heading text-2xl leading-none text-gold">
+            “
+          </span>
+          <blockquote className="-mt-1 font-heading text-[0.95rem] leading-snug text-[#f5f1e8]/90 italic">
+            Lâmpada para os meus pés é a tua palavra, e luz para o meu caminho.
+          </blockquote>
+          <figcaption className="mt-2 text-xs font-semibold text-gold">Salmos 119:105</figcaption>
+        </figure>
       </div>
     </aside>
   );
 }
 
 // ---------------------------------------------------------------------------
-// Cabeçalho do conteúdo: busca na Bíblia, favoritos e perfil.
+// Cabeçalho: saudação, busca, tema e perfil.
 
-const ROOTS = ["/inicio", "/biblia", "/oracoes", "/jornadas", "/perfil", "/devocionais", "/coracao", "/favoritos"];
+const noop = () => () => {};
+const useHour = () =>
+  useSyncExternalStore(
+    noop,
+    () => new Date().getHours(),
+    () => 8,
+  );
+
+export function greetingFor(hour: number) {
+  if (hour >= 5 && hour < 12) return { hello: "Bom dia", blessing: "Que a paz de Deus esteja com você neste novo dia." };
+  if (hour >= 12 && hour < 18) return { hello: "Boa tarde", blessing: "Que a presença de Deus renove suas forças nesta tarde." };
+  return { hello: "Boa noite", blessing: "Descanse no cuidado de Deus. Ele guarda você esta noite." };
+}
+
+function ThemeToggle() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const ready = useIsClient();
+  const dark = !ready || resolvedTheme !== "light";
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(dark ? "light" : "dark")}
+      aria-label={dark ? "Mudar para o tema claro" : "Mudar para o tema escuro"}
+      className="relative flex h-10 w-[4.5rem] items-center rounded-full bg-card ring-1 ring-border transition-colors hover:ring-gold/40"
+    >
+      <span
+        className={cn(
+          "absolute grid size-8 place-items-center rounded-full bg-linear-to-br from-[#e8d5ac] to-[#c9a66b] text-[#0b1220] shadow transition-all duration-300",
+          dark ? "left-1" : "left-[2.3rem]",
+        )}
+      >
+        {dark ? <Moon className="size-4" /> : <Sun className="size-4" />}
+      </span>
+    </button>
+  );
+}
 
 export function AppHeader() {
   const path = usePathname();
-  const isRoot = ROOTS.includes(path);
+  const isHome = path === "/inicio";
+  const isRoot = ["/inicio", "/biblia", "/oracoes", "/jornadas", "/perfil", "/devocionais", "/coracao", "/favoritos", "/progresso"].includes(path);
   const [profile] = useLocalProfile();
   const ready = useIsClient();
-  const initial = ready && profile.name.trim() ? profile.name.trim()[0]!.toUpperCase() : null;
+  const hour = useHour();
+  const { hello, blessing } = greetingFor(hour);
+  const name = ready ? profile.name.trim() : "";
+  const initial = name ? name[0]!.toUpperCase() : null;
 
   return (
     <header
       className={cn(
-        "z-30 border-b border-border/70 bg-background/80 backdrop-blur-xl pt-safe md:sticky md:top-0",
-        // no celular, só nas telas principais (as internas têm a barra "voltar")
+        "z-30 border-b border-border/60 bg-background/80 backdrop-blur-xl pt-safe md:sticky md:top-0",
         isRoot ? "block" : "hidden md:block",
       )}
     >
-      <div className="mx-auto flex h-16 max-w-[88rem] items-center 2xl:max-w-[104rem] gap-3 px-5 md:h-[4.5rem] md:px-8 xl:px-12">
+      <div className="mx-auto flex h-16 max-w-[88rem] items-center gap-4 px-5 md:h-[4.75rem] md:px-8 xl:px-12 2xl:max-w-[104rem]">
         <Link href="/inicio" className="md:hidden" aria-label={`${brand.name}, ir para o início`}>
           <Logo compact />
         </Link>
 
-        <form action="/biblia/busca" role="search" className="relative hidden max-w-md flex-1 md:block">
+        {/* saudação (tablet/computador) */}
+        <div className={cn("hidden min-w-0 md:block", !isHome && "lg:block md:hidden")}>
+          <p className="truncate font-heading text-[1.35rem] leading-tight font-semibold">
+            {hello}
+            {name ? `, ${name}` : ""}!
+          </p>
+          <p className="truncate text-[0.82rem] text-muted-foreground">{blessing}</p>
+        </div>
+
+        <form action="/biblia/busca" role="search" className="relative ml-auto hidden w-full max-w-md md:block xl:mx-auto">
           <label htmlFor="busca-topo" className="sr-only">
             Buscar na Bíblia
           </label>
@@ -231,7 +279,7 @@ export function AppHeader() {
           />
         </form>
 
-        <div className="ml-auto flex items-center gap-1.5">
+        <div className="ml-auto flex shrink-0 items-center gap-2 md:ml-0">
           <Link
             href="/biblia/busca"
             aria-label="Buscar na Bíblia"
@@ -239,17 +287,13 @@ export function AppHeader() {
           >
             <Search className="size-5" />
           </Link>
-          <Link
-            href="/favoritos"
-            aria-label="Meus favoritos"
-            className="grid size-11 place-items-center rounded-full text-muted-foreground transition-colors hover:bg-card hover:text-foreground"
-          >
-            <Heart className="size-5" />
-          </Link>
+          <span className="hidden sm:block">
+            <ThemeToggle />
+          </span>
           <Link
             href="/perfil"
             aria-label="Perfil e ajustes"
-            className="ml-1 grid size-10 place-items-center rounded-full bg-linear-to-br from-[#e8d5ac] to-[#b8955a] font-heading text-lg font-semibold text-[#0b1220] ring-2 ring-gold/25 transition-transform hover:scale-105"
+            className="grid size-10 place-items-center rounded-full bg-linear-to-br from-[#8a6a3a] to-[#5c4524] font-heading text-lg font-semibold text-[#f5e9d0] ring-2 ring-gold/30 transition-transform hover:scale-105"
           >
             {initial ?? <User className="size-5" />}
           </Link>
