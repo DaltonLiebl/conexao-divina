@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Conexão Divina
 
-## Getting Started
+*Seu encontro diário com Deus.* Aplicativo cristão premium (PWA) feito com Next.js e Supabase.
 
-First, run the development server:
+Arquitetura, decisões e plano de etapas: **[ARQUITETURA.md](./ARQUITETURA.md)**.
+
+## Rodar localmente
+
+Requisitos: Node.js 20 ou mais recente.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local   # preencha as variáveis do Supabase
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Páginas úteis durante o desenvolvimento:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `/design-system`: todos os componentes, cores, paisagens e estados, com troca de tema e de tamanho da letra.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Comando             | O que faz                                                        |
+| ------------------- | ---------------------------------------------------------------- |
+| `npm run dev`       | servidor de desenvolvimento                                      |
+| `npm run build`     | build de produção                                                |
+| `npm run lint`      | ESLint                                                           |
+| `npm run typecheck` | checagem de tipos                                                |
+| `npm run test:db`   | aplica as migrações num PostgreSQL embutido e testa RLS e regras |
+| `npm run icons`     | gera os ícones do app em `public/icons`                          |
 
-To learn more about Next.js, take a look at the following resources:
+## Banco de dados (Supabase)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Somente na primeira vez, no projeto compartilhado:** rode
+   `supabase/shared-project/0000_isolar_apps_pessoais.sql` no SQL editor.
+2. Rode as migrações de `supabase/migrations/` em ordem (SQL editor → colar → Run).
+3. Em **Project Settings → Data API → Exposed schemas**, adicione `conexao`.
+4. Em **Authentication → Sign In / Providers**, ligue o cadastro por e-mail e a **confirmação de e-mail**.
+   Para produção, configure um SMTP próprio.
+5. Em **Authentication → URL Configuration**, adicione `https://SEU-DOMINIO/**` às Redirect URLs.
+6. Depois de criar sua conta no app, torne-se administrador (SQL em ARQUITETURA.md).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Publicação (Vercel)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Crie o projeto na Vercel apontando para este diretório.
+2. Cadastre as variáveis do `.env.example`. As que não começam com `NEXT_PUBLIC_` são secretas e ficam
+   só no servidor.
+3. Faça o deploy e acesse pelo celular: no Android, use o menu → "Instalar app"; no iPhone, use
+   Compartilhar → "Adicionar à Tela de Início".

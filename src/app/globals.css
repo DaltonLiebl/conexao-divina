@@ -1,26 +1,259 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* =====================================================================
+   Conexão Divina — design system
+   Paleta da marca:
+     bege claro  #F8F5EF   dourado suave #C5A46D   azul profundo #17283E
+     branco      #FFFFFF   verde suave   #819B89   texto         #252525
+   Regras:
+     - Texto corrido nunca usa o dourado ou o verde claros (contraste baixo);
+       para texto há as variantes "-ink" (escurecidas, contraste AA).
+     - Tudo em rem: o controle de tamanho de fonte (--font-scale) escala o app
+       inteiro, inclusive botões e espaçamentos.
+   ===================================================================== */
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-cormorant), Georgia, serif;
+  --font-reading: var(--font-lora), Georgia, serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* cores da marca */
+  --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-sage: var(--sage);
+  --color-sage-ink: var(--sage-ink);
+  --color-navy: var(--navy);
+  --color-sand: var(--sand);
+  --color-success: var(--success);
+
+  /* destaques da Bíblia */
+  --color-hl-gold: var(--hl-gold);
+  --color-hl-green: var(--hl-green);
+  --color-hl-blue: var(--hl-blue);
+  --color-hl-rose: var(--hl-rose);
+  --color-hl-lilac: var(--hl-lilac);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.5);
+  --radius-4xl: calc(var(--radius) * 3);
+
+  --shadow-soft: 0 1px 2px rgb(23 40 62 / 0.04), 0 8px 24px -8px rgb(23 40 62 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(23 40 62 / 0.05), 0 18px 40px -12px rgb(23 40 62 / 0.22);
+
+  --ease-gentle: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --font-scale: 1;
+  --radius: 0.875rem;
+
+  --background: #f8f5ef;
+  --foreground: #252525;
+  --card: #ffffff;
+  --card-foreground: #252525;
+  --popover: #ffffff;
+  --popover-foreground: #252525;
+  --primary: #17283e;
+  --primary-foreground: #ffffff;
+  --secondary: #efe8db;
+  --secondary-foreground: #17283e;
+  --muted: #f1ece2;
+  --muted-foreground: #5c574e;
+  --accent: #f3ecdf;
+  --accent-foreground: #17283e;
+  --destructive: #b42318;
+  --border: #e5dccc;
+  --input: #ddd2bf;
+  --ring: #c5a46d;
+
+  --gold: #c5a46d;
+  --gold-ink: #7d5f2b;
+  --gold-foreground: #17283e;
+  --sage: #819b89;
+  --sage-ink: #46604f;
+  --navy: #17283e;
+  --sand: #f8f5ef;
+  --success: #3f6b4f;
+
+  --hl-gold: #f6e7c4;
+  --hl-green: #dcebdf;
+  --hl-blue: #dbe6f3;
+  --hl-rose: #f6dede;
+  --hl-lilac: #e7e0f2;
+
+  --chart-1: #17283e;
+  --chart-2: #c5a46d;
+  --chart-3: #819b89;
+  --chart-4: #7a8aa3;
+  --chart-5: #d9c7a3;
+
+  --sidebar: #fbf9f5;
+  --sidebar-foreground: #252525;
+  --sidebar-primary: #17283e;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1ece2;
+  --sidebar-accent-foreground: #17283e;
+  --sidebar-border: #e8e0d2;
+  --sidebar-ring: #c5a46d;
+}
+
+.dark {
+  --background: #0d1724;
+  --foreground: #f3eee4;
+  --card: #15233a;
+  --card-foreground: #f3eee4;
+  --popover: #15233a;
+  --popover-foreground: #f3eee4;
+  --primary: #dcc08c;
+  --primary-foreground: #0d1724;
+  --secondary: #1d2e47;
+  --secondary-foreground: #f3eee4;
+  --muted: #1a2a41;
+  --muted-foreground: #b8b0a2;
+  --accent: #1f3250;
+  --accent-foreground: #f3eee4;
+  --destructive: #f08a7e;
+  --border: rgb(243 238 228 / 0.11);
+  --input: rgb(243 238 228 / 0.17);
+  --ring: #c5a46d;
+
+  --gold: #d1b47e;
+  --gold-ink: #e3c995;
+  --gold-foreground: #0d1724;
+  --sage: #93ad9b;
+  --sage-ink: #a9c4b1;
+  --navy: #0d1724;
+  --sand: #f8f5ef;
+  --success: #8fc19f;
+
+  --hl-gold: rgb(197 164 109 / 0.3);
+  --hl-green: rgb(129 155 137 / 0.3);
+  --hl-blue: rgb(122 150 196 / 0.3);
+  --hl-rose: rgb(209 130 130 / 0.28);
+  --hl-lilac: rgb(160 140 200 / 0.3);
+
+  --chart-1: #dcc08c;
+  --chart-2: #93ad9b;
+  --chart-3: #7f9cc6;
+  --chart-4: #c9a2a2;
+  --chart-5: #8a7fb0;
+
+  --sidebar: #101c2d;
+  --sidebar-foreground: #f3eee4;
+  --sidebar-primary: #dcc08c;
+  --sidebar-primary-foreground: #0d1724;
+  --sidebar-accent: #1a2a41;
+  --sidebar-accent-foreground: #f3eee4;
+  --sidebar-border: rgb(243 238 228 / 0.09);
+  --sidebar-ring: #c5a46d;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    /* 17px de base (mais legível para pessoas idosas) × escolha do usuário */
+    font-size: calc(106.25% * var(--font-scale));
+    -webkit-text-size-adjust: 100%;
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "kern", "liga";
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    @apply font-heading text-balance;
+    letter-spacing: -0.01em;
+  }
+  button:not(:disabled), [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--gold) 40%, transparent);
+  }
+  /* Foco sempre visível e generoso (acessibilidade) */
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  html[data-reduce-motion="true"] *,
+  html[data-reduce-motion="true"] *::before,
+  html[data-reduce-motion="true"] *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Texto de leitura (reflexões, orações, Bíblia) */
+  .prose-reading {
+    @apply font-reading text-[1.0625rem] leading-[1.85] text-foreground;
+  }
+  .prose-reading p + p {
+    @apply mt-4;
+  }
+  /* Rótulo pequeno em caixa alta (sobre títulos) */
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.16em] text-gold-ink;
+  }
+  /* Área segura do iPhone (barra inferior) */
+  .pb-safe {
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+  .pt-safe {
+    padding-top: max(env(safe-area-inset-top), 0px);
+  }
 }
