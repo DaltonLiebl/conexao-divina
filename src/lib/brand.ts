@@ -5,13 +5,13 @@ export const brand = {
   description:
     "Palavra do dia, versículos, orações, Bíblia, jornadas espirituais e um diário privado para fortalecer sua fé um dia de cada vez.",
   colors: {
-    sand: "#F8F5EF",
-    gold: "#C5A46D",
-    navy: "#17283E",
+    sand: "#F7F4EE",
+    gold: "#D4B47C",
+    navy: "#0B1220",
     white: "#FFFFFF",
     sage: "#819B89",
     ink: "#252525",
-    night: "#0D1724",
+    night: "#0B1220",
   },
 } as const;
 

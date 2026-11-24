@@ -7,8 +7,8 @@ import path from "node:path";
 const out = path.resolve("public/icons");
 fs.mkdirSync(out, { recursive: true });
 
-const NAVY = "#17283E";
-const GOLD = "#C5A46D";
+const NAVY = "#0B1220";
+const GOLD = "#D4B47C";
 const SAND = "#F8F5EF";
 
 // Símbolo (mesmo desenho de src/components/brand/logo.tsx), em 48x48.

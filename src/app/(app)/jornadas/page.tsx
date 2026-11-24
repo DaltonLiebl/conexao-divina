@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
 import { jornadas } from "@/content/jornadas";
 import { JourneyCard } from "@/components/journeys/journey-ui";
+import { PageHeader } from "@/components/ds/layout";
 
 export const metadata: Metadata = { title: "Jornadas espirituais" };
 
 export default function JornadasPage() {
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-32 pt-8 md:px-8 md:pb-16">
-      <p className="eyebrow">Planos guiados</p>
-      <h1 className="mt-1 text-[2.4rem] leading-tight font-semibold">Jornadas espirituais</h1>
-      <p className="mt-2 text-lg text-muted-foreground">
-        Alguns minutos por dia, um passo de cada vez. Seu progresso fica salvo neste aparelho.
-      </p>
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+    <div className="page">
+      <PageHeader
+        eyebrow="Planos guiados"
+        title="Jornadas espirituais"
+        lead="Alguns minutos por dia, um passo de cada vez. Seu progresso fica salvo neste aparelho."
+      />
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
         {jornadas.map((j) => (
           <JourneyCard
             key={j.slug}

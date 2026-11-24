@@ -14,8 +14,8 @@ export default async function PalavraDataPage({ params }: PageProps<"/palavra/[d
   if (data === today) redirect("/palavra");
   if (!canShowDate(data, today)) notFound();
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-32 md:px-8 md:pb-16">
-      <TopBar title="Palavra do dia" backHref="/anteriores" />
+    <div className="page">
+      <TopBar title="Palavra do dia" backHref="/devocionais" />
       <PalavraView iso={data} isToday={false} />
     </div>
   );

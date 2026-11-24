@@ -40,7 +40,7 @@ export function FavoritesList() {
   const shown = filter === "todos" ? list : list.filter((f) => f.kind === filter);
   return (
     <>
-      <div className="-mx-5 mt-5 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:mx-0 md:px-0">
+      <div className="no-scrollbar -mx-5 mt-2 flex gap-2 overflow-x-auto px-5 pb-1 [scrollbar-width:none] md:mx-0 md:px-0">
         {kinds.map((k) => (
           <button
             key={k.id}
@@ -48,7 +48,7 @@ export function FavoritesList() {
             aria-pressed={filter === k.id}
             onClick={() => setFilter(k.id)}
             className={cn(
-              "min-h-11 shrink-0 rounded-full px-4 font-semibold ring-1 transition-colors",
+              "min-h-11 shrink-0 rounded-full px-4 font-medium ring-1 transition-colors",
               filter === k.id ? "bg-primary text-primary-foreground ring-primary" : "bg-card ring-border",
             )}
           >
@@ -57,11 +57,11 @@ export function FavoritesList() {
         ))}
       </div>
       {shown.length ? (
-        <ul className="mt-4 space-y-3">
+        <ul className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
           {shown.map((f) => {
             const Icon = iconFor[f.kind] ?? Heart;
             return (
-              <li key={f.key} className="flex items-center gap-2 rounded-3xl bg-card p-2 pl-4 shadow-soft ring-1 ring-foreground/5">
+              <li key={f.key} className="surface flex items-center gap-2 p-2 pl-4">
                 <Link href={f.href} className="flex min-h-14 min-w-0 flex-1 items-center gap-3">
                   <Icon className="size-5 shrink-0 text-gold-ink" aria-hidden />
                   <span className="min-w-0">

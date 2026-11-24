@@ -73,7 +73,13 @@ scripts/generate-icons.mjs  gera os ícones PWA a partir do símbolo
 9. **Imagens.** As capas padrão são paisagens SVG próprias (`components/brand/scene.tsx`), sem licença de
    terceiros. Fotos enviadas pelo painel (Storage) as substituem. A tabela `media_assets` guarda crédito
    e licença de cada arquivo.
-10. **Acessibilidade.** Base de 17px, controle de tamanho de letra (0,9× a 1,5×) que escala o app inteiro
+10. **Visual v2 (24/11/2026).** Tema escuro como padrão (fundo #0B1220, cards #162235, dourado #D4B47C,
+    texto #F5F1E8, bordas #263449), Playfair Display para títulos e versículos, Inter para a interface.
+    Layout responsivo: celular com barra inferior; tablet (768px+) com trilho de ícones; computador (1024px+)
+    com menu lateral de 240px por categorias e cabeçalho com busca. Conteúdo até 88rem (104rem em telas muito
+    largas); telas de leitura com coluna de texto de até 46rem e coluna lateral de ações. Classes base em
+    `globals.css`: `.page`, `.surface`, `.verse-card`, `.page-title`. "Dias anteriores" virou `/devocionais`.
+11. **Acessibilidade.** Base de 17px, controle de tamanho de letra (0,9× a 1,5×) que escala o app inteiro
     (tudo em rem), botões de pelo menos 48px, foco visível, contraste AA (variantes `-ink` para texto
     dourado/verde), opção "reduzir animações" e respeito a `prefers-reduced-motion`.
 

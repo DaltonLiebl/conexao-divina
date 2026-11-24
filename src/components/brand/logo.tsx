@@ -9,7 +9,7 @@ export function LogoMark({ className, title }: { className?: string; title?: str
   return (
     <svg
       viewBox="0 0 48 48"
-      className={cn("size-10", className)}
+      className={cn("size-10 text-foreground", className)}
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}
     >
@@ -35,16 +35,32 @@ export function LogoMark({ className, title }: { className?: string; title?: str
   );
 }
 
-export function Logo({ className, showSlogan = false }: { className?: string; showSlogan?: boolean }) {
+export function Logo({
+  className,
+  showSlogan = false,
+  compact = false,
+}: {
+  className?: string;
+  showSlogan?: boolean;
+  /** versão menor (cabeçalho e menu lateral) */
+  compact?: boolean;
+}) {
   return (
-    <span className={cn("inline-flex items-center gap-2.5 text-primary", className)}>
-      <LogoMark className="size-10 shrink-0" />
-      <span className="flex flex-col leading-none">
-        <span className="font-heading text-[1.6rem] font-semibold tracking-tight text-foreground">
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
+      <LogoMark className={cn("shrink-0", compact ? "size-9" : "size-10")} />
+      <span className="flex min-w-0 flex-col leading-none">
+        <span
+          className={cn(
+            "font-heading font-semibold tracking-tight whitespace-nowrap text-foreground",
+            compact ? "text-[1.2rem]" : "text-[1.5rem]",
+          )}
+        >
           {brand.name}
         </span>
         {showSlogan ? (
-          <span className="mt-1 text-xs font-medium tracking-wide text-muted-foreground">{brand.slogan}</span>
+          <span className="mt-1 truncate text-[0.68rem] font-medium tracking-wide text-muted-foreground">
+            {brand.slogan}
+          </span>
         ) : null}
       </span>
     </span>

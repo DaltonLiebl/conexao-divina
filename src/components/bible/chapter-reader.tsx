@@ -66,7 +66,7 @@ export function ChapterReader({
 
   return (
     <>
-      <div className="prose-reading text-[1.15rem] leading-[2]">
+      <div className="prose-reading text-[1.2rem] leading-[2.05] md:text-[1.28rem]">
         {verses.map(([n, text]) => {
           const hl = highlights[key(n)];
           const isSel = selected.includes(n);
@@ -108,7 +108,7 @@ export function ChapterReader({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 80, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-x-3 bottom-20 z-50 mx-auto max-w-xl md:left-[19rem] rounded-3xl bg-popover p-4 shadow-lift ring-1 ring-foreground/10 md:bottom-6"
+            className="fixed inset-x-3 bottom-20 z-50 mx-auto max-w-xl rounded-3xl bg-popover p-4 shadow-lift ring-1 ring-gold/25 md:bottom-6 md:left-[6.5rem] lg:left-[16rem]"
             role="dialog"
             aria-label="Ações do versículo"
           >

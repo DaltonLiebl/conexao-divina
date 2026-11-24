@@ -13,7 +13,8 @@ function MotionPrefs({ children }: { children: React.ReactNode }) {
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+    <ThemeProvider attribute="class" defaultTheme="dark"
+      storageKey="cd:theme" enableSystem disableTransitionOnChange>
       <AppearanceProvider>
         <MotionPrefs>
           <TooltipProvider>

@@ -16,17 +16,17 @@ export default async function LivroPage({ params }: PageProps<"/biblia/[livro]">
   const b = bookBySlug((await params).livro);
   if (!b) notFound();
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-32 md:px-8 md:pb-16">
+    <div className="page">
       <TopBar title={b.name} backHref="/biblia" />
       <p className="eyebrow">{b.testament === "AT" ? "Antigo Testamento" : "Novo Testamento"}</p>
-      <h1 className="mt-1 text-[2.4rem] font-semibold">{b.name}</h1>
+      <h1 className="page-title mt-2">{b.name}</h1>
       <p className="mt-1 text-muted-foreground">Escolha um capítulo</p>
-      <ul className="mt-5 grid grid-cols-5 gap-2 sm:grid-cols-8">
+      <ul className="mt-8 grid grid-cols-5 gap-2.5 sm:grid-cols-8 lg:grid-cols-10 xl:grid-cols-12 2xl:grid-cols-15">
         {Array.from({ length: b.chapters }, (_, i) => i + 1).map((c) => (
           <li key={c}>
             <Link
               href={`/biblia/${b.slug}/${c}`}
-              className="grid aspect-square min-h-12 place-items-center rounded-2xl bg-card text-lg font-bold shadow-soft ring-1 ring-foreground/5 transition-colors hover:bg-gold/15"
+              className="grid aspect-square min-h-12 place-items-center rounded-2xl bg-card text-lg font-semibold ring-1 ring-border/80 transition-all hover:bg-gold/15 hover:text-gold-ink hover:ring-gold/40"
             >
               {c}
             </Link>

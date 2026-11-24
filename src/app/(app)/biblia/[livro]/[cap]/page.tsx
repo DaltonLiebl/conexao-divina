@@ -35,13 +35,14 @@ export default async function CapituloPage({ params }: PageProps<"/biblia/[livro
   const label = `${b.name} ${chapter}`;
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-5 pb-36 md:px-8 md:pb-16">
+    <div className="page pb-36">
       <TopBar title={label} backHref={`/biblia/${b.slug}`} action={<ReaderFontButton />} />
       <TrackReading book={b.slug} chapter={chapter} label={label} />
+      <div className="mx-auto max-w-3xl">
 
-      <header className="mb-6 text-center">
+      <header className="mb-8 text-center md:mb-10">
         <p className="eyebrow">{BIBLE_TRANSLATION.short}</p>
-        <h1 className="mt-1 text-[2.6rem] font-semibold">{b.name}</h1>
+        <h1 className="mt-2 text-[2.4rem] font-semibold md:text-[3rem]">{b.name}</h1>
         <p className="font-heading text-6xl font-semibold text-gold">{chapter}</p>
       </header>
 
@@ -51,7 +52,7 @@ export default async function CapituloPage({ params }: PageProps<"/biblia/[livro
         {prev ? (
           <Link
             href={`/biblia/${prev.slug}/${prev.c}`}
-            className="flex min-h-14 items-center gap-2 rounded-2xl bg-card px-4 font-semibold shadow-soft ring-1 ring-foreground/5"
+            className="flex min-h-14 items-center gap-2 rounded-2xl bg-card px-4 font-semibold shadow-soft ring-1 ring-border/80"
           >
             <ChevronLeft className="size-5 shrink-0" />
             <span className="truncate">{prev.label}</span>
@@ -62,7 +63,7 @@ export default async function CapituloPage({ params }: PageProps<"/biblia/[livro
         {next ? (
           <Link
             href={`/biblia/${next.slug}/${next.c}`}
-            className="flex min-h-14 items-center justify-end gap-2 rounded-2xl bg-primary px-4 font-semibold text-primary-foreground shadow-soft"
+            className="flex min-h-14 items-center justify-end gap-2 rounded-2xl bg-primary px-4 font-semibold text-primary-foreground shadow-soft transition-colors hover:bg-primary/90"
           >
             <span className="truncate">{next.label}</span>
             <ChevronRight className="size-5 shrink-0" />
@@ -70,6 +71,7 @@ export default async function CapituloPage({ params }: PageProps<"/biblia/[livro
         ) : null}
       </nav>
       <p className="mt-8 text-xs leading-relaxed text-muted-foreground">{BIBLE_TRANSLATION.credit}</p>
+      </div>
     </div>
   );
 }

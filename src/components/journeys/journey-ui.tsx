@@ -23,13 +23,13 @@ export function JourneyCard(props: {
   return (
     <Link
       href={`/jornadas/${props.slug}`}
-      className="group overflow-hidden rounded-4xl bg-card shadow-soft ring-1 ring-foreground/5 transition-all hover:-translate-y-0.5 hover:shadow-lift"
+      className="group overflow-hidden rounded-4xl bg-card shadow-soft ring-1 ring-border/80 transition-all hover:-translate-y-0.5 hover:shadow-lift"
     >
-      <div className="h-36">
+      <div className="h-44">
         <Scene variant={props.scene} />
       </div>
       <div className="p-5">
-        <h2 className="text-[1.6rem] leading-tight font-semibold">{props.title}</h2>
+        <h2 className="text-[1.55rem] leading-tight font-semibold">{props.title}</h2>
         <p className="text-muted-foreground">
           {props.subtitle} · {props.total} dias · {props.minutes} min/dia
         </p>
@@ -54,7 +54,7 @@ export function JourneyDays({ slug, days }: { slug: string; days: { title: strin
 
   return (
     <>
-      <div className="mt-5 rounded-3xl bg-card p-5 shadow-soft ring-1 ring-foreground/5">
+      <div className="surface p-6">
         <div className="flex items-center justify-between font-semibold">
           <span>Seu progresso</span>
           <span>
@@ -91,7 +91,7 @@ export function JourneyDays({ slug, days }: { slug: string; days: { title: strin
               <Link
                 href={`/jornadas/${slug}/${n}`}
                 className={cn(
-                  "flex min-h-16 items-center gap-4 rounded-2xl px-4 py-3 shadow-soft ring-1 ring-foreground/5 transition-colors",
+                  "flex min-h-16 items-center gap-4 rounded-2xl px-4 py-3 shadow-soft ring-1 ring-border/80 transition-colors",
                   isDone ? "bg-sage/12" : "bg-card hover:bg-gold/10",
                 )}
               >

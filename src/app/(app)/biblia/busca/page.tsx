@@ -15,9 +15,10 @@ export default async function BuscaPage({ searchParams }: PageProps<"/biblia/bus
   const { total, results } = q ? await searchBible(q) : { total: 0, results: [] };
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-32 md:px-8 md:pb-16">
+    <div className="page">
       <TopBar title="Buscar na Bíblia" backHref="/biblia" />
-      <form className="flex gap-2" role="search">
+      <h1 className="page-title mb-6">Buscar na Bíblia</h1>
+      <form className="flex max-w-3xl gap-2" role="search">
         <label htmlFor="q" className="sr-only">
           Palavras
         </label>
@@ -42,15 +43,15 @@ export default async function BuscaPage({ searchParams }: PageProps<"/biblia/bus
               {total} {total === 1 ? "versículo encontrado" : "versículos encontrados"}
               {total > results.length ? ` (mostrando os ${results.length} primeiros)` : ""}
             </p>
-            <ul className="mt-3 space-y-3">
+            <ul className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
               {results.map((r) => (
                 <li key={r.label}>
                   <Link
                     href={chapterHref(r.ref)}
-                    className="block rounded-3xl bg-card p-5 shadow-soft ring-1 ring-foreground/5 transition-all hover:shadow-lift"
+                    className="surface surface-link block h-full p-5"
                   >
                     <span className="block text-sm font-bold text-gold-ink">{r.label}</span>
-                    <span className="mt-1 block font-reading leading-relaxed">
+                    <span className="mt-1.5 block font-reading text-[1.05rem] leading-relaxed">
                       <VerseText text={r.text} />
                     </span>
                   </Link>

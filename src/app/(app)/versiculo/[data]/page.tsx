@@ -14,8 +14,8 @@ export default async function VersiculoDataPage({ params }: PageProps<"/versicul
   if (data === today) redirect("/versiculo");
   if (!canShowDate(data, today)) notFound();
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-32 md:px-8 md:pb-16">
-      <TopBar title="Versículo do dia" backHref="/anteriores" />
+    <div className="page">
+      <TopBar title="Versículo do dia" backHref="/devocionais" />
       <VersiculoView iso={data} isToday={false} />
     </div>
   );

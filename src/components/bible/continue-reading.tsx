@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect } from "react";
-import { BookOpen, ChevronRight } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 import { useLastReading } from "@/lib/local-store";
 import { cn } from "@/lib/utils";
 
@@ -13,17 +13,16 @@ export function ContinueReading({ className }: { className?: string }) {
   return (
     <Link
       href={`/biblia/${last.book}/${last.chapter}`}
-      className={cn(
-        "flex items-center gap-4 rounded-3xl bg-primary p-5 text-primary-foreground shadow-lift transition-transform hover:-translate-y-0.5",
-        className,
-      )}
+      className={cn("verse-card group flex items-center gap-5 p-5 md:p-6", className)}
     >
-      <BookOpen className="size-7 shrink-0 text-gold" />
-      <span className="min-w-0 flex-1">
-        <span className="block text-sm font-semibold opacity-80">Continuar de onde parou</span>
-        <span className="block text-xl font-bold">{last.label}</span>
+      <span className="grid size-14 shrink-0 place-items-center rounded-2xl bg-[#d4b47c]/15 text-[#d4b47c] ring-1 ring-[#d4b47c]/25">
+        <BookOpen className="size-7" aria-hidden />
       </span>
-      <ChevronRight className="size-5 shrink-0" />
+      <span className="min-w-0 flex-1">
+        <span className="block text-sm text-[#f5f1e8]/70">Continuar de onde parou</span>
+        <span className="block font-heading text-2xl font-semibold">{last.label}</span>
+      </span>
+      <ArrowRight className="size-5 shrink-0 text-[#d4b47c] transition-transform group-hover:translate-x-1" />
     </Link>
   );
 }

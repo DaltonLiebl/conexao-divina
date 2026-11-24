@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "Palavra do dia" };
 export default async function PalavraHojePage() {
   await connection();
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-32 md:px-8 md:pb-16">
+    <div className="page">
       <TopBar title="Palavra do dia" backHref="/inicio" />
       <PalavraView iso={todayISO()} isToday />
     </div>

@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronRight, Footprints, Sparkles } from "lucide-react";
+import { ChevronRight, Footprints, Map, Sparkles } from "lucide-react";
 import { TopBar } from "@/components/shell/top-bar";
 import { VerseText, plainVerse } from "@/components/bible/verse-text";
 import { ActionBar } from "@/components/content/action-bar";
 import { CompleteDayButton } from "@/components/journeys/journey-ui";
-import { DemoNote } from "@/components/content/daily-views";
+import { Callout, DemoNote } from "@/components/content/daily-views";
+import { AsideCard, ListLink, ReadingLayout } from "@/components/ds/layout";
 import { getPassage } from "@/lib/bible/server";
 import { chapterHref } from "@/lib/bible/books";
 import { jornadaPorSlug, jornadas } from "@/content/jornadas";
@@ -30,51 +31,58 @@ export default async function JornadaDiaPage({ params }: PageProps<"/jornadas/[s
   const verse = await getPassage(d.ref);
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-5 pb-32 md:px-8 md:pb-16">
+    <div className="page">
       <TopBar title={`${j.title} · Dia ${n}`} backHref={`/jornadas/${j.slug}`} />
-      <p className="eyebrow">
-        Dia {n} de {j.days.length}
-      </p>
-      <h1 className="mt-1 text-[2.4rem] leading-tight font-semibold">{d.title}</h1>
 
-      <blockquote className="mt-6 border-l-4 border-gold pl-5">
-        <p className="font-reading text-[1.3rem] leading-relaxed italic">
-          “<VerseText text={verse.text} />”
+      <header className="mb-8 lg:mb-10">
+        <p className="eyebrow">
+          {j.title} · Dia {n} de {j.days.length}
         </p>
-        <Link href={chapterHref(d.ref)} className="mt-2 inline-flex items-center gap-1 font-semibold text-gold-ink hover:underline">
-          {verse.label} <ChevronRight className="size-4" />
-        </Link>
-      </blockquote>
+        <h1 className="page-title mt-2 max-w-4xl">{d.title}</h1>
+      </header>
 
-      <ActionBar
-        className="mt-5"
-        shareTitle={d.title}
-        shareText={`“${plainVerse(verse.text)}” (${verse.label})`}
-        listenText={[d.title, `${plainVerse(verse.text)}. ${verse.label}.`, ...d.reflection, "Prática de hoje.", d.practice, "Oração.", d.prayer].join(" ")}
-      />
+      <ReadingLayout
+        actions={
+          <ActionBar className="grid grid-cols-2 gap-2 sm:flex"
+                shareTitle={d.title}
+                shareText={`“${plainVerse(verse.text)}” (${verse.label})`}
+                listenText={[d.title, `${plainVerse(verse.text)}. ${verse.label}.`, ...d.reflection, "Prática de hoje.", d.practice, "Oração.", d.prayer].join(" ")}
+              />
+        }
+        aside={
+          <>
+            <AsideCard title="Jornada">
+              <ListLink href={`/jornadas/${j.slug}`} icon={Map} title={j.title} hint={`Ver os ${j.days.length} dias`} />
+            </AsideCard>
+          </>
+        }
+      >
+        <blockquote className="verse-card p-7 md:p-9">
+          <p className="font-heading text-[1.35rem] leading-relaxed italic md:text-[1.5rem]">
+            “<VerseText text={verse.text} />”
+          </p>
+          <Link href={chapterHref(d.ref)} className="mt-4 inline-flex items-center gap-1 font-semibold text-[#d4b47c] hover:underline">
+            {verse.label} <ChevronRight className="size-4" />
+          </Link>
+        </blockquote>
 
-      <div className="prose-reading mt-8">
-        {d.reflection.map((p, i) => (
-          <p key={i}>{p}</p>
-        ))}
-      </div>
+        <div className="prose-reading mt-9 text-[1.12rem]">
+          {d.reflection.map((p, i) => (
+            <p key={i}>{p}</p>
+          ))}
+        </div>
 
-      <section className="mt-8 rounded-3xl bg-sage/12 p-5">
-        <h2 className="flex items-center gap-2 font-sans text-lg font-bold text-sage-ink">
-          <Footprints className="size-5" /> Prática de hoje
-        </h2>
-        <p className="mt-2 text-[1.05rem] leading-relaxed">{d.practice}</p>
-      </section>
+        <Callout icon={Footprints} title="Prática de hoje" tone="sage">
+          <p className="text-[1.05rem] leading-relaxed">{d.practice}</p>
+        </Callout>
 
-      <section className="mt-5 rounded-3xl bg-gold/12 p-5">
-        <h2 className="flex items-center gap-2 font-sans text-lg font-bold text-gold-ink">
-          <Sparkles className="size-5" /> Oração
-        </h2>
-        <p className="prose-reading mt-2 italic">{d.prayer}</p>
-      </section>
+        <Callout icon={Sparkles} title="Oração">
+          <p className="prose-reading italic">{d.prayer}</p>
+        </Callout>
 
-      <CompleteDayButton slug={j.slug} day={n} total={j.days.length} />
-      <DemoNote />
+        <CompleteDayButton slug={j.slug} day={n} total={j.days.length} />
+        <DemoNote />
+      </ReadingLayout>
     </div>
   );
 }

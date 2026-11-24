@@ -27,6 +27,9 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async redirects() {
+    return [{ source: "/anteriores", destination: "/devocionais", permanent: true }];
+  },
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },

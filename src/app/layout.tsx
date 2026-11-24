@@ -1,27 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Lora, Nunito_Sans } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { appearanceBootScript } from "@/lib/appearance";
 import { brand, siteUrl } from "@/lib/brand";
 import "./globals.css";
 
-// Títulos: serifada elegante. Interface: sem serifa amigável e muito legível.
-// Leitura longa (Bíblia, reflexões, orações): serifada de texto.
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  display: "swap",
-});
-const nunito = Nunito_Sans({
-  variable: "--font-nunito",
-  subsets: ["latin"],
-  display: "swap",
-});
-const lora = Lora({
-  variable: "--font-lora",
+// Títulos, mensagens e versículos: Playfair Display. Interface: Inter.
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
   style: ["normal", "italic"],
+  display: "swap",
+});
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -54,10 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: brand.colors.sand },
-    { media: "(prefers-color-scheme: dark)", color: brand.colors.night },
-  ],
+  themeColor: brand.colors.night,
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
@@ -68,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="pt-BR"
       suppressHydrationWarning
-      className={`${cormorant.variable} ${nunito.variable} ${lora.variable} h-full`}
+      className={`${playfair.variable} ${inter.variable} h-full`}
     >
       <head>
         {/* aplica tamanho de letra e "reduzir animações" antes da primeira pintura */}
